@@ -25,11 +25,13 @@ fn main() {
         // Create a new empty String and bind it to the guess variable
         let mut guess = String::new();
         
-        // Receive user input from the standard input (keyboard) and store it in the guess variable
-        // The read_line method reads input from the standard input and appends it to the guess string
-        // The &mut guess argument indicates that read_line should store the input in the guess variable
-        // The expect method is called in case of an error during input reading
-        // It displays the provided error message if an error occurs
+        /*
+        Receive user input from the standard input (keyboard) and store it in the guess variable
+        The read_line method reads input from the standard input and appends it to the guess string
+        The &mut guess argument indicates that read_line should store the input in the guess variable
+        The expect method is called in case of an error during input reading
+        It displays the provided error message if an error occurs
+        */
         io::stdin()
         .read_line(&mut guess)
         .expect("Failed to read line");
@@ -38,13 +40,18 @@ fn main() {
         Compare the user's guess with the secret number and print the result
         - guess.trim() removes any leading or trailing whitespace from the user input
         - parse() method parses the trimmed input into an unsigned 32-bit integer (u32)
-        - The expect method is used to handle the possibility of parsing failure,
-        displaying the provided error message if parsing fails
+        - If parsing is successful (Ok), the parsed number is assigned to the guess variable
+        - If parsing fails (Err), the loop continues to the next iteration
         */
-        let guess: u32 = guess.trim().parse().expect("Please type a number!");
+        let guess: u32 = match guess.trim().parse() {
+            Ok(num) => num, // If parsing is successful, assign the parsed number to guess
+            Err(_) => continue, // If parsing fails, continue to the next iteration of the loop
+        };
         
-        // Print the user's guess by using string interpolation
-        // The {} is a placeholder for the value of the guess variable
+        /*
+        Print the user's guess by using string interpolation
+        The {} is a placeholder for the value of the guess variable
+        */
         println!("You guessed: {}", guess);
     
         /*
